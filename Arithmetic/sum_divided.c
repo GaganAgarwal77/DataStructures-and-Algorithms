@@ -1,3 +1,5 @@
+// Question: Add two large numbers represented as strings by dividing them into parts of 4 and storing them individually as integers.
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -5,12 +7,10 @@ void divide_number(char *num,int*nums)
 {
     char *temp = malloc(100000*sizeof(char));
     int num_len = strlen(num);
-    //printf("%d\n",num_len);
     int i=0,count=1,flag=0;
     for(i = num_len-1;i>=0;i--)
     {
         char *temp = calloc(100000,sizeof(char));
-        //printf("%d %d\n",count,i);
         if(count%4 == 0 && count > 0)
         {
             
@@ -29,10 +29,7 @@ void divide_number(char *num,int*nums)
         temp[k] = num[k];
     }
     nums[flag] = atoi(temp);
-    // for(int i =0; i<=flag;i++)
-    // {
-    //     printf("%d ",nums[i]);
-    // }
+
 }
 void addLargeNos(char *num1,char *num2, char*ans)
 {
