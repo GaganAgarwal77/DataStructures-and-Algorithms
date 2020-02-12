@@ -3,8 +3,6 @@
 #define swap(a,b) {int (temp);temp =a;a=b;b=temp;}
 
 
-int arr[1000];
-int sec[1000];
 int Partition(int *A,int i, int j,int pivot)
 {
     int l = i,r =j;
@@ -33,8 +31,7 @@ void RQS(int *A,int i,int j)
 {
     if(i<j)
     {
-      
-        printf("p = %d Ap = %d i =%d, j=%d, n/2 = %d\n",p,A[p],i,j,(j-i+1)/2);
+  
         int p = (rand() % (j-i+1)) +i;
         swap(A[i],A[p]);
         int k = Partition(A,i+1,j,A[i]);
