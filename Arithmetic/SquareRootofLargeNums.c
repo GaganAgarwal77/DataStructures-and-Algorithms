@@ -20,7 +20,6 @@ void AddBinaryNumbers(char*num1,char*num2,char*num)
     for(int i = num2_len;i<num1_len;i++)
         rev_num2[i] = '0';
     rev_num2[num1_len] = '\0';
-    //printf("%s\n%s\n",rev_num1,rev_num2);
     int carry =0;
     int i;
     for(i =0;i<num1_len;i++)
@@ -43,7 +42,6 @@ void AddBinaryNumbers(char*num1,char*num2,char*num)
     if(carry != 0)
         rev_num[i++] = carry + '0';
     rev_num[i] ='\0';
-    //printf("%s\n",rev_num);
     for(int i = 0;i<strlen(rev_num);i++)
     {   
         num[i] = rev_num[strlen(rev_num)-i-1];
@@ -57,7 +55,6 @@ void ConvertIntoBinary(char *num,char*answer)
     while(strlen(num)>0)
     {
         binary[i] = (num[strlen(num)-1] -'0')%2 +'0';  
-        //printf("len:%ld\n",strlen(num));
         char *ans = malloc(10000*sizeof(char));
         char *temp = malloc(10000*sizeof(char));
         int len_num = strlen(num);
@@ -81,7 +78,6 @@ void ConvertIntoBinary(char *num,char*answer)
         for(int i =0;i<strlen(temp)-k;i++)
             ans[i] = temp[i+k];
         num = ans;
-        //printf("%s\n",num);
         i++;
     }
     int k =0;
@@ -97,7 +93,6 @@ char* SquaringBinaryNumber(char*num)
     sqnum[0] = '0';
     sqnum[1] = '\0';
     int count = 0;
-    //printf("%s\n",num);
     for(int i =strlen(num)-1;i>=0;i--)
     {    
         if(num[i] == '1')
@@ -108,13 +103,11 @@ char* SquaringBinaryNumber(char*num)
             
         }
     }
-    // if(num[0] ='1')
-    //     AddBinaryNumbers(num,sqnum,sqnum);
-    //printf("%s %s\n",num,sqnum);
+
     for(int i =0; i < count;i++)
     {
     int l = strlen(num);
-    //printf("%d ",indexes[i]);
+
     if(i==0)
     {
         for(int j=0;j<indexes[i];j++)
@@ -125,13 +118,12 @@ char* SquaringBinaryNumber(char*num)
         for(int j=0;j<indexes[i] -indexes[i-1];j++)
             num[l + j] = '0';
     }
-    //printf("%s\n",num);
+
 
     if(strlen(num) > strlen(sqnum))
         AddBinaryNumbers(num,sqnum,sqnum);
     else
         AddBinaryNumbers(sqnum,num,sqnum);
-    //printf("%s %s\n",num,sqnum);
     }
     return sqnum;
 }
@@ -184,15 +176,12 @@ char* SquareRootofLargeNum(char*num)
     ConvertIntoBinary(num,binary_num);
     int len_num = strlen(binary_num);
     char *sqrtnum = calloc(100000,sizeof(char));
-    //printf("%d\n",len_num);
     char *k = calloc(100000,sizeof(char));
     k[0] = '1';
     for(int  i=1;i<len_num;i++)
     {
         k[i] = '0';
     }
-    //printf("%s\n",binary_num);
-    //printf("%s\n",k);
     for(int i =0;i<len_num;i++)
     {
         char *temp = calloc(10000,sizeof(char));
@@ -204,14 +193,12 @@ char* SquareRootofLargeNum(char*num)
             k[i] = '0';
             if(i != len_num-1)         
                 k[i+1] ='1';
-            //printf("if:%s\n",k);
         }
         else if(CompareBinaryNumbers(temp,binary_num) == -1)
         {
             k[i] ='1';
             if(i != len_num-1)         
                 k[i+1] ='1';
-            //printf("else if:%s\n",k);
         }
         else
             break;    
@@ -222,13 +209,11 @@ char* SquareRootofLargeNum(char*num)
         if(k[i] != '0')
             {
                 index = i;
-      //          printf("%d\n",index);
                 break;
             }
     }
     for(int j = index;j<strlen(k);j++)
         sqrtnum[j-index] = k[j];   
-    //printf("%ld %s\n",strlen(k),sqrtnum);
     return sqrtnum;
     
 }
@@ -244,7 +229,6 @@ int main()
 {
     char *bin_ans = calloc(100000,sizeof(char));
     char *num = calloc(100000,sizeof(char));
-    char *num2 = calloc(100000,sizeof(char));
     scanf("%s",num);
     bin_ans =SquareRootofLargeNum(num);
     printf("%s\n",bin_ans);
