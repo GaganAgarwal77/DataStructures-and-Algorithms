@@ -24,14 +24,10 @@ int Partition(int *A,int i, int j,int pivot)
 }
 
 
-
-
-
 void RQS(int *A,int i,int j)
 {
     if(i<j)
     {
-  
         int p = (rand() % (j-i+1)) +i;
         swap(A[i],A[p]);
         int k = Partition(A,i+1,j,A[i]);
@@ -45,17 +41,13 @@ int main()
     int n;
     scanf("%d",&n);
     int *arr = malloc(n*sizeof(int));
-    int *sec = malloc(n*sizeof(int));
     for(int i = 0; i < n; i++)
-	{
 	    scanf("%d",arr+i);
-        sec[i] = arr[i];
-	}
+
     RQS(arr,0,n-1);
+	
     for(int a = 0 ; a < n ; a++)
-	{
     	printf("%d ",arr[a]);//printing the sorted array using for loop
-	}
 
     return 0;
 }
