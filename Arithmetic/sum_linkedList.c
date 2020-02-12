@@ -1,3 +1,5 @@
+// Question: Multiply two large numbers represented as strings by using linked lists instead of arrays.
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
