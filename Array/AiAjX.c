@@ -1,3 +1,5 @@
+// Question: Given an X, Find A[i] and A[j] in the array A such that A[i] + A[j] = X.
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
