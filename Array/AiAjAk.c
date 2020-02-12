@@ -1,3 +1,5 @@
+// Question: Find A[i],A[j],A[k] in the array A such that A[i] + A[j] = A[k].
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
