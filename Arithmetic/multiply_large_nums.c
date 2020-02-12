@@ -1,3 +1,5 @@
+// Question: Multiply two large numbers represented as strings,and outputting the final answer in a string.
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
