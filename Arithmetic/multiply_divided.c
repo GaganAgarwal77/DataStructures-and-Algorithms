@@ -1,3 +1,5 @@
+// Question: Multiply two large numbers represented as strings by dividing them into parts of 4 and storing them individually as integers.
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
