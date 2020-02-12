@@ -1,3 +1,5 @@
+// Question: Add two large numbers represented as strings and outputting the final answer as a string.
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
