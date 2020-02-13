@@ -9,17 +9,17 @@ int GetDecimalValue(char*num,int l,int r)
         ans = 2*ans +(num[i]-'0'); //Getting the Decimal Value by looping through the given number in given constraints
     return ans;
 }
-int ConvertIntoGivenBase(char*binary,int N,int base,char*value)
+int ConvertIntoGivenBase(char*binary,int N,int base_digits,char*value)
 {
     char *temp = malloc(N*sizeof(char)); //creating a temporary array to store the values obtained 
     int j=0;
-    for(j=0;j<N/base;j++)
+    for(j=0;j<N/base_digits;j++)
     {
-        temp[j] = GetDecimalValue(binary,(N-base)-(base*j),N-(base*j)) +'0';  //running through the number and obtaing the decimal values by dividing the string into base parts(3 for octal and 4 for hexadecimal)
+        temp[j] = GetDecimalValue(binary,(N-base_digits)-(base_digits*j),N-(base_digits*j)) +'0';  //running through the number and obtaing the decimal values by dividing the string into base parts(3 for octal and 4 for hexadecimal)
     }
-    if(base*j < N)
+    if(base_digits*j < N)
     {
-        temp[j] = GetDecimalValue(binary,0,N%base) +'0'; //when there are numbers left in the given binary number,we find the decimal value of the leftover numbers(0's/1's)
+        temp[j] = GetDecimalValue(binary,0,N%base_digits) +'0'; //when there are numbers left in the given binary number,we find the decimal value of the leftover numbers(0's/1's)
         j++;                                                
     }
     int i=0;
