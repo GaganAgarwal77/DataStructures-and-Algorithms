@@ -63,56 +63,27 @@ void Insert(struct Node** head_ref, int new_data)
     (*head_ref)    = new_node; 
 }
 
-// void Delete(struct Node** head_ref, int x) 
-// { 
-//     struct Node* node = (struct Node*) malloc(sizeof(struct Node));
-//     node = *head_ref;
-//     if(node->data==x)
-//     {
-//         *head_ref = node->next; 
-//         free(node);
-//         return; 
-//     }
-//     while(node->next != NULL)
-//     {
-//         if((node->next)->data == x)
-//         {
-//             struct Node* temp = node->next;
-//             node->next = temp->next;
-//             free(temp);
-//             break;
-//         }
-//         node = node->next;
-//     }   
-// }
 void Delete(struct Node **head_ref, int key) 
 { 
-    // Store head node 
     struct Node* temp = *head_ref, *prev; 
-  
-    // If head node itself holds the key to be deleted 
-    if (temp != NULL && temp->data == key) 
+      if (temp != NULL && temp->data == key) 
     { 
-        *head_ref = temp->next;   // Changed head 
-        free(temp);               // free old head 
+        *head_ref = temp->next;   
+        free(temp);              
         return; 
     } 
   
-    // Search for the key to be deleted, keep track of the 
-    // previous node as we need to change 'prev->next' 
     while (temp != NULL && temp->data != key) 
     { 
         prev = temp; 
         temp = temp->next; 
     } 
   
-    // If key was not present in linked list 
     if (temp == NULL) return; 
   
-    // Unlink the node from linked list 
     prev->next = temp->next; 
   
-    free(temp);  // Free memory 
+    free(temp);  
 } 
 
 bool Search(struct Node* node, int x)
@@ -130,41 +101,30 @@ bool Search(struct Node* node, int x)
 
 bool Possible(int X[],struct Node **D,int max,int left,int right,int n)
 {
-    printf("\nChecking for max = %d while l= %d, r =%d, n=%d \n",max,left,right,n);
 
     int count = 0;
-    //int i =0;
     for(int i =0;i<left;i++)
     {
-        printf("max-X[i]: %d ",ABS(max-X[i]));
         if(Search(D,ABS(max-X[i])))
             Delete(D,ABS(max -X[i]));
         else    
             return false;
     }
-    // int j =0;
     for(int j =right+1;j<n;j++)
     {
-        printf("max-X[j]: %d ",ABS(max-X[j]));
         if(Search(*D,ABS(max-X[j])))
             Delete(D,ABS(max- X[j]));
         else
             return false;
     }
-    printf("Deleted\n");
-    printList(D);   
     for(int k = 0;k<left;k++)
     {
-        printf("Insert %d back again, ",ABS(max-X[k]));
         Insert(D,ABS(max-X[k]));
     }
     for(int m = right+1;m<n;m++)
     {
-        printf("Insert %d back again, ",ABS(max-X[m]));
         Insert(D,ABS(max-X[m]));
     }
-    printf("\n");
-    printList(D);   
     return true;    
 }
 
@@ -180,35 +140,23 @@ bool Try(int X[],struct Node **D,int n,int left,int right)
     if(Possible(X,D,max,left,right,n))
     {
         X[right]=max;
-        printf("X[right] = max:%d\n",X[right]);
         for(int i=0;i<left;++i) 
         {
-                printf("Delete %d, ",ABS(X[i]-X[right]));     
                 Delete(&D,ABS(X[i]-X[right]));
         }
         for(int i=right+1;i<n;++i)
         {
-            printf("Delete %d, ",ABS(X[i]-X[right]));
             Delete(&D,ABS(X[i]-X[right]));
         }
-        printList(&D);
         found=Try(X,D,n,left,right-1);
-        printf("T/F : %d\n",found);
         if (found==false) 
         {
-            printf("X[right]:%d\n",X[right]);
             for(int i=0;i<left;++i) 
                 Insert(&D,ABS(X[i]-X[right]));
             for(int i=right+1;i<n;++i) 
                 Insert(&D,ABS(X[i]-X[right]));
         }
-        printList(&D);
-        
     }
-    printf("\n");
-    printList(&D);
-    printf("\nX[n-1]=%d-max=%d => %d\n",X[n-1],max,X[n-1]-max);
-    printf("found : %d\n",found);
     if(Possible(X,D,X[n-1]-max,left,right,n) && found==false)
     {
         X[left]=X[n-1]-max;
@@ -216,7 +164,6 @@ bool Try(int X[],struct Node **D,int n,int left,int right)
             Delete(&D,ABS(X[i]-X[left]));
         for(int i=right+1;i<n;++i) 
             Delete(&D,ABS(X[i]-X[left]));
-        printList(&D);
         found = Try(X,D,n,left+1,right);
         if (found==false) 
         {
@@ -238,11 +185,9 @@ bool ProAss1(int X[],struct Node *D,int n)
     
     X[n-2] = FindMax(&D);
     Delete(&D,FindMax(&D));   
-    printList(&D);
     if (Search(&D,X[n-1]-X[n-2])) 
     {
         Delete(&D,X[n-1]-X[n-2]);
-        printList(&D);
         return Try(X,D,n,1,n-3);
     }
     else return false;
