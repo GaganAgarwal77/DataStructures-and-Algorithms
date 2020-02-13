@@ -1,3 +1,6 @@
+//Question: Given an array , find all such pairs , A[i] and A[j]  A[i] > A[j] where j>i
+// Time Complexity : O(nlogn)
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -14,7 +17,6 @@ int merge(int *A,int i,int k,int j)
         {
             B[p++] = A[r++];
             num_ip += k-l+1;
-            printf("IP:%d\n",num_ip);
         }
     }
     while(l<=k)
