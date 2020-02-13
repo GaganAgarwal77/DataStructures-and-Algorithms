@@ -1,3 +1,5 @@
+// Question: Given an Array A, Make a Prefix Sum Array P[] to find P[j] and P[i] such that P[j]-P[i] is maximum where j>i.
+// Time Complexity: O(n)
 #include<stdio.h>
 #include<stdlib.h>
 
