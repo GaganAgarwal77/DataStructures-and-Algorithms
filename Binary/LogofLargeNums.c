@@ -1,3 +1,6 @@
+// Question: Given a Large Decimal Number in the form of a string, find the floor of the Log of the Number.
+// Time Complexity: O(logn)
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
