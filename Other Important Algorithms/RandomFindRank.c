@@ -1,3 +1,6 @@
+// Question : Given a number in a array, find its rank without sorting the array.
+// Algorithm : O(n)
+
 #include<stdio.h>
 #include<stdlib.h>
 #define swap(a,b) {int (temp);temp =a;a=b;b=temp;}
@@ -51,10 +54,8 @@ int Replicate(int*A,int i,int j,int r)
     }
     int ans;
     int value = RFR(A,0,j-i,r);
-    //printf("%d %d\n",value,j-i+1);
     for(int a = 0 ; a < j-i+1 ; a++)
 	{
-        //printf("%d ",sec[a]);
         if(sec[a] == value)
         {    
             ans = a;
@@ -69,22 +70,17 @@ int main()
     int n;
     scanf("%d",&n);
     int *arr = malloc(n*sizeof(int));   
-    //int *sec = malloc(n*sizeof(int));
     for(int i = 0; i < n; i++)
 	{
 	    scanf("%d",arr+i);
-        //sec[i] = arr[i];
-    }
+    	}
     int rank;
-    //int ans;
     scanf("%d",&rank);
     int value = Replicate(arr,0,n-1,rank);
     for(int a = 0 ; a < n ; a++)
 	{
         printf("%d ",arr[a]);
-        // if(sec[a] == value)
-        //     ans = a;
-	}
+    	}
     printf("\n%d\n",value);
     return 0;
 }
