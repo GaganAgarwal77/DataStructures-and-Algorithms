@@ -1,14 +1,15 @@
+//Question: Given an Array, find the array of minimums to the right of each element of the given array.
+// Time Complexity: O(n)
+
 #include<stdio.h>
 #include<stdlib.h>
 
-//O(n),Uses Stack
-
-void LeftMinArray(int *A,int n,int *ans)
+void NextMinArray(int *A,int n,int *ans)
 {
     int *stack = malloc(n*sizeof(int));
 
     int top = -1;
-    for(int i =n-1;i>-1;i--)
+    for(int i =0;i<n;i++)
     {
         if(top < 0)
             stack[++top] = i;
