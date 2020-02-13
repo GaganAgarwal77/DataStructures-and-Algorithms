@@ -1,3 +1,5 @@
+// Question: Given an Array A, find A[j] and A[i] such that A[j]-A[i] is maximum where j>i.
+// Time Complexity: O(n)
 #include<stdio.h>
 #include<stdlib.h>
 
