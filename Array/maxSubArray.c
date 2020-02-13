@@ -1,3 +1,5 @@
+// Question: Given an Array A, find the sum of the subarray which has the maximum sum.
+// Time Complexity: O(n)
 #include<stdio.h>
 #include<stdlib.h>
 
