@@ -1,3 +1,6 @@
+//Question : Convert a Large Decimal Number represented as a string into binary.
+//Time Complexity: O(logn)
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
