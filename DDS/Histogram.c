@@ -1,7 +1,9 @@
+// Question: The Histogram Problem using Stack
+// Time Complexity : O(n)
+
 #include<stdio.h>
 #include<stdlib.h>
 
-//O(n),Uses Stack
 
 void NextMinArray(int *A,int n,int *ans)
 {
@@ -53,8 +55,6 @@ int LargestRectangle(int*A,int*L,int*R,int n)
     {
         if(max <= (R[i] - L[i] - 1)*(A[i]))
             max = (R[i] - L[i] - 1)*(A[i]);
-        //printf("max => %d ,%d\n",max,(R[i] - L[i] - 2)*(A[i]));
-        printf("(%d-%d-2)*%d = max\n",R[i],L[i],A[i]);
     }
     return max;    
 }
@@ -70,12 +70,6 @@ int main()
         scanf("%d",&arr[i]);
     NextMinArray(arr,n,R);
     LeftMinArray(arr,n,L);
-    for(int i=0;i<n;i++)
-        printf("%d ",R[i]);
-    printf("\n");
-    for(int i=0;i<n;i++)
-        printf("%d ",L[i]);
-    printf("\n");
     int ans;
     ans = LargestRectangle(arr,L,R,n);
     printf("%d\n",ans);
