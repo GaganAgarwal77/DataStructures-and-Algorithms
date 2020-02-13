@@ -1,3 +1,5 @@
+//Question: Given a Binary String , find out its representation in decimal,hexadecimal and octal.
+
 #include<stdio.h>
 #include<stdlib.h>
 
