@@ -24,7 +24,7 @@ void NextMinArray(int *A,int n,int *ans)
         }
     }
     while(top >=0)
-        ans[stack[top--]] = -1;
+        ans[stack[top--]] = n;
 }
 void LeftMinArray(int *A,int n,int *ans)
 {
