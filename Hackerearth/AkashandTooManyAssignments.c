@@ -1,145 +1,86 @@
-#include<stdio.h>
-#include<stdlib.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 
 int BITS[26][1000000];
-char String[1000000];
 
-void Update(int i, int x, int n,int pos)
+void Update(int i, int x, int n, int pos) //pos =>character index , i => string index
 {
-    while(i <= n)
+    while (i <= n)
     {
         BITS[pos][i] += x;
-        i += i&(-i);
+        i += i & (-i);
     }
 }
 
-
-void BuildBITS(int n)
+void BuildBITS(int n, char *String)
 {
-    for(int i =0;i<n;i++)
-        Update(i+1,1,n,String[i]-'a');
+    for (int i = 0; i < n; i++)
+        Update(i + 1, 1, n, String[i] - 'a');
 }
 
-int PrefixSum(int i,int pos)
+int PrefixSum(int i, int pos)
 {
     int sum = 0;
-    while(i > 0)
+    while (i > 0)
     {
         sum += BITS[pos][i];
-        i-= i&(-i);
+        i -= i & (-i);
     }
     return sum;
 }
 
-int RangeSumQuery(int i , int j, int pos)
+int RangeSumQuery(int i, int j, int pos)
 {
-    int ans = PrefixSum(j,pos) - PrefixSum(i-1,pos);
+    int ans = PrefixSum(j, pos) - PrefixSum(i - 1, pos);
     return ans;
-    //printf("%d\n",ans);
 }
 
-int ReturnKthSmallestCharacter(int s , int e, int k)
+int ReturnKthSmallestCharacter(int s, int e, int k)
 {
-    int total =0;
-    for(int i =0;i<26;i++)
+    int total = 0;
+    int i = 0;
+    for (i = 0; i < 26; i++)
     {
-        total += RangeSumQuery(s,e,i);
-        if(total>=k)
+        total += RangeSumQuery(s, e, i);
+        if (total >= k)
             break;
     }
-    return (total + 'a');
+    return (i + 'a');
 }
 int main()
 {
-    int n;
-    scanf("%d",&n);
-    scanf("%s",String);
-    printf("%s\n",String);
+    int n, num_ops;
+    char *String = (char *)calloc(1000000, sizeof(char));
+    scanf("%d %d", &n, &num_ops);
+    scanf("%s", String);
 
-    BuildBITS(n);
-    // for(int i =0;i<26;i++)
-    // {
-    //     for(int j=1;j<n+1;j++)
-    //     {
-    //         printf("%d",BITS[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-    printf("%c",ReturnKthSmallestCharacter(2,5,3));
+    BuildBITS(n, String);
+    for (int i = 0; i < num_ops; i++)
+    {
+        int op_type;
+        scanf("%d", &op_type);
+        if (op_type == 0)
+        {
+            int index;
+            char c[1];
+            scanf("%d %s", &index, c);
+            Update(index, -1, n, String[index - 1] - 'a');
+            String[index - 1] = c[0];
+            Update(index, 1, n, String[index - 1] - 'a');
+            // printf("%s\n", String);
+        }
+        else
+        {
+            int ll, rl, k;
+            scanf("%d %d %d", &ll, &rl, &k);
+            if (rl < ll || rl - ll < k - 1)
+                printf("Out of range\n");
+            else
+            {
+                char ans = ReturnKthSmallestCharacter(ll, rl, k);
+                printf("%c\n", ans);
+            }
+        }
+    }
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// #include<stdio.h>
-// #include<stdlib.h>
-
-
-// int BITS[26][1000000];
-// char String[1000000];
-
-// void Update(int i, int x, int n,int pos)
-// {
-//     while(i < n)
-//     {
-//         BITS[pos][i] += x;
-//         i += i&(-i);
-//     }
-// }
-
-
-// void BuildBIT(int n)
-// {
-//     for(int i =0;i<n;i++)
-//         Update(i+1,1,n,String[i]-'a');
-// }
-
-// int PrefixSum(int Array[], int i)
-// {
-//     int sum = 0;
-//     while(i > 0)
-//     {
-//         sum += Array[i];
-//         i-= i&(-i);
-//     }
-//     return sum;
-// }
-
-// void RangeSumQuery(int Array[], int i , int j, int n)
-// {
-//     int ans = PrefixSum(Array, j) - PrefixSum(Array,i-1);
-//     printf("%d\n",ans);
-// }
-// int main()
-// {
-//     int n;
-//     scanf("%d",&n);
-//     scanf("%s",String);
-//     printf("%s\n",String);
-//     BuildBIT(n);
-//     for(int i =0;i<26;i++)
-//     {
-//         for(int j=0;j<n;j++)
-//         {
-//             printf("%d",BITS[i][j]);
-//         }
-//         printf("\n");
-//     }
-//     return 0;
-// }
