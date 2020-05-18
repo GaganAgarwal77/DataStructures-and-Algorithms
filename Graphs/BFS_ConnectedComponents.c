@@ -1,3 +1,4 @@
+//O(m+n)
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -16,42 +17,57 @@ void push(struct AdjacencyListNode **head_ref, int new_data)
     (*head_ref) = new_node;
 }
 
-void DFS(struct AdjacencyListNode **AdjacencyList, int source, int n)
+void BFS(struct AdjacencyListNode **AdjacencyList, int n)
 {
-    bool *Visited = malloc(n * sizeof(int));
+    bool *Visited = malloc(n * sizeof(bool));
     int *Phi = malloc(n * sizeof(int));
+    int *C = malloc(n * sizeof(int));
+    int num_cc = 0;
+    int source;
     for (int i = 0; i < n; i++)
     {
         Phi[i] = -2;
         Visited[i] = false;
+        C[i] = 0;
     }
-    int *Stack = malloc(n * sizeof(int));
-    int top = 0;
-    Stack[top] = source;
-    Phi[source] = -1;
-    printf("DFS traversal of the graph from source %d is: ", source);
-    while (top >= 0)
+    for (int i = 0; i < n; i++)
     {
-        int node = Stack[top--];
-        if (Visited[node] == false)
+        if (C[i] == 0)
         {
-            printf("%d ", node);
-            Visited[node] = true;
-            struct AdjacencyListNode *temp = AdjacencyList[node];
-            while (temp != NULL)
+            num_cc++;
+            source = i;
+            int *Queue = malloc(n * sizeof(int));
+            int head = 0;
+            int tail = 0;
+            Queue[tail] = source;
+            Visited[source] = true;
+            Phi[source] = -1;
+            C[source] = num_cc;
+            printf("BFS traversal of the graph from source %d is: ", source);
+            while (head <= tail)
             {
-                if (Visited[temp->i] == false)
+                int node = Queue[head];
+                head++;
+                printf("%d ", node);
+                struct AdjacencyListNode *temp = AdjacencyList[node];
+                while (temp != NULL)
                 {
-                    Stack[++top] = temp->i;
-                    Phi[temp->i] = node;
+                    if (Visited[temp->i] == false)
+                    {
+                        Queue[++tail] = temp->i;
+                        Visited[temp->i] = true;
+                        Phi[temp->i] = node;
+                        C[temp->i] = num_cc;
+                    }
+                    temp = temp->next;
                 }
-                temp = temp->next;
             }
+            printf("\nPhi[i] and i combinations are: \n");
+            for (int i = 0; i < n; ++i)
+                printf("(%d,%d)", Phi[i], i);
         }
     }
-    printf("\nPhi[i] and i combinations are: \n");
-    for (int i = 0; i < n; ++i)
-        printf("(%d,%d)", Phi[i], i);
+    printf("\nNumber of Connected Components: %d\n", num_cc);
 }
 int main()
 {
@@ -89,6 +105,6 @@ int main()
         }
     }
 
-    DFS(AdjacencyList, 0, n);
+    BFS(AdjacencyList, n);
     return 0;
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#define INT_MAX 1147483647
 
 struct AdjacencyListNode
 {
@@ -16,42 +17,47 @@ void push(struct AdjacencyListNode **head_ref, int new_data)
     (*head_ref) = new_node;
 }
 
-void DFS(struct AdjacencyListNode **AdjacencyList, int source, int n)
+void BFS(struct AdjacencyListNode **AdjacencyList, int source, int n)
 {
     bool *Visited = malloc(n * sizeof(int));
     int *Phi = malloc(n * sizeof(int));
+    int *Level = malloc(n * sizeof(int));
     for (int i = 0; i < n; i++)
     {
         Phi[i] = -2;
         Visited[i] = false;
+        Level[i] = INT_MAX;
     }
-    int *Stack = malloc(n * sizeof(int));
-    int top = 0;
-    Stack[top] = source;
+    int *Queue = malloc(n * sizeof(int));
+    int head = 0;
+    int tail = 0;
+    Queue[tail] = source;
+    Visited[source] = true;
     Phi[source] = -1;
-    printf("DFS traversal of the graph from source %d is: ", source);
-    while (top >= 0)
+    Level[source] = 0;
+    printf("BFS traversal of the graph from source %d is: ", source);
+    while (head <= tail)
     {
-        int node = Stack[top--];
-        if (Visited[node] == false)
+        int node = Queue[head];
+        head++;
+        printf("%d ", node);
+        struct AdjacencyListNode *temp = AdjacencyList[node];
+        while (temp != NULL)
         {
-            printf("%d ", node);
-            Visited[node] = true;
-            struct AdjacencyListNode *temp = AdjacencyList[node];
-            while (temp != NULL)
+            if (Visited[temp->i] == false)
             {
-                if (Visited[temp->i] == false)
-                {
-                    Stack[++top] = temp->i;
-                    Phi[temp->i] = node;
-                }
-                temp = temp->next;
+                Queue[++tail] = temp->i;
+                Visited[temp->i] = true;
+                Phi[temp->i] = node;
+                Level[temp->i] = Level[node] + 1;
             }
+            temp = temp->next;
         }
     }
-    printf("\nPhi[i] and i combinations are: \n");
+    printf("\nPhi[i],i,Level[i] combinations are: \n");
     for (int i = 0; i < n; ++i)
-        printf("(%d,%d)", Phi[i], i);
+        printf("(%d, %d, %d)", Phi[i], i, Level[i]);
+    printf("\n");
 }
 int main()
 {
@@ -89,6 +95,6 @@ int main()
         }
     }
 
-    DFS(AdjacencyList, 0, n);
+    BFS(AdjacencyList, 0, n);
     return 0;
 }

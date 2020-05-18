@@ -16,43 +16,53 @@ void push(struct AdjacencyListNode **head_ref, int new_data)
     (*head_ref) = new_node;
 }
 
-void DFS(struct AdjacencyListNode **AdjacencyList, int source, int n)
+void DFS(struct AdjacencyListNode **AdjacencyList, int *DT, int *FT, bool *Visited, int *Phi, int *count, int source, int n)
+{
+
+    printf("%d ", source);
+    Visited[source] = true;
+    DT[source] = (*count)++;
+    struct AdjacencyListNode *temp = AdjacencyList[source];
+    while (temp != NULL)
+    {
+        if (Visited[temp->i] == false)
+        {
+            Phi[temp->i] = source;
+            DFS(AdjacencyList, DT, FT, Visited, Phi, count, temp->i, n);
+        }
+        temp = temp->next;
+    }
+    FT[source] = (*count)++;
+}
+
+void DFSUtil(struct AdjacencyListNode **AdjacencyList, int source, int n)
 {
     bool *Visited = malloc(n * sizeof(int));
     int *Phi = malloc(n * sizeof(int));
+    int *DiscoveryTime = malloc(n * sizeof(int));
+    int *FinishTime = malloc(n * sizeof(int));
     for (int i = 0; i < n; i++)
     {
         Phi[i] = -2;
         Visited[i] = false;
+        DiscoveryTime[i] = 0;
+        FinishTime[i] = 0;
     }
-    int *Stack = malloc(n * sizeof(int));
-    int top = 0;
-    Stack[top] = source;
-    Phi[source] = -1;
-    printf("DFS traversal of the graph from source %d is: ", source);
-    while (top >= 0)
+    int count = 1;
+    for (int i = 0; i < n; i++)
     {
-        int node = Stack[top--];
-        if (Visited[node] == false)
+        if (Visited[i] == false)
         {
-            printf("%d ", node);
-            Visited[node] = true;
-            struct AdjacencyListNode *temp = AdjacencyList[node];
-            while (temp != NULL)
-            {
-                if (Visited[temp->i] == false)
-                {
-                    Stack[++top] = temp->i;
-                    Phi[temp->i] = node;
-                }
-                temp = temp->next;
-            }
+            Phi[i] = -1;
+            DFS(AdjacencyList, DiscoveryTime, FinishTime, Visited, Phi, &count, i, n);
         }
     }
-    printf("\nPhi[i] and i combinations are: \n");
+    printf("\nPhi[i], i, D[i], F[i] combinations are: \n");
     for (int i = 0; i < n; ++i)
-        printf("(%d,%d)", Phi[i], i);
+        printf("(%d, %d, %d, %d) ", Phi[i], i, DiscoveryTime[i], FinishTime[i]);
+    printf("\n");
 }
+
 int main()
 {
     int n;
@@ -89,6 +99,6 @@ int main()
         }
     }
 
-    DFS(AdjacencyList, 0, n);
+    DFSUtil(AdjacencyList, 0, n);
     return 0;
 }
